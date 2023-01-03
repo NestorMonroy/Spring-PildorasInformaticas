@@ -34,5 +34,44 @@ public class ClienteDAOImpl implements ClienteDAO{
 		return clientes;
 	}
 
+	@Override
+	@Transactional
+	public void insertarCliente(Cliente elCliente) {
+		// TODO Auto-generated method stub
+		//Obtener la session
+		Session miSession = sessionFactory.getCurrentSession();
+		//Insertar el cliente
+		//miSession.save(elCliente);
+		miSession.saveOrUpdate(elCliente);
+		
+	}
+
+	@Override
+	@Transactional
+	public Cliente getCliente(int id) {
+		// TODO Auto-generated method stub
+		//Obtener la session
+		Session miSession = sessionFactory.getCurrentSession();
+		
+		//Obtener la informacion del cliente selecionado
+		Cliente elCliente=miSession.get(Cliente.class, id);
+		
+		return elCliente;
+	}
+
+	@Override
+	@Transactional
+	public void eliminarCliente(int id) {
+		// TODO Auto-generated method stub
+		//Obtener la session
+		Session miSession = sessionFactory.getCurrentSession();
+		//Borrar el cliente 
+		Query consulta = miSession.createQuery("delete from Cliente where id=:idDelCliente");
+		
+		consulta.setParameter("idDelCliente", id);
+		consulta.executeUpdate();
+		
+	}
+
 	
 }
